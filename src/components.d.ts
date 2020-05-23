@@ -5,9 +5,15 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { boardPosition, } from "./helpers/model";
 export namespace Components {
     interface MtConnect {
         "connect": number;
+    }
+    interface MtConnectSlot {
+        "col": number;
+        "highlighted": boolean;
+        "value": boardPosition;
     }
 }
 declare global {
@@ -17,16 +23,30 @@ declare global {
         prototype: HTMLMtConnectElement;
         new (): HTMLMtConnectElement;
     };
+    interface HTMLMtConnectSlotElement extends Components.MtConnectSlot, HTMLStencilElement {
+    }
+    var HTMLMtConnectSlotElement: {
+        prototype: HTMLMtConnectSlotElement;
+        new (): HTMLMtConnectSlotElement;
+    };
     interface HTMLElementTagNameMap {
         "mt-connect": HTMLMtConnectElement;
+        "mt-connect-slot": HTMLMtConnectSlotElement;
     }
 }
 declare namespace LocalJSX {
     interface MtConnect {
         "connect"?: number;
     }
+    interface MtConnectSlot {
+        "col"?: number;
+        "highlighted"?: boolean;
+        "onSelectSlot"?: (event: CustomEvent<any>) => void;
+        "value"?: boardPosition;
+    }
     interface IntrinsicElements {
         "mt-connect": MtConnect;
+        "mt-connect-slot": MtConnectSlot;
     }
 }
 export { LocalJSX as JSX };
@@ -34,6 +54,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "mt-connect": LocalJSX.MtConnect & JSXBase.HTMLAttributes<HTMLMtConnectElement>;
+            "mt-connect-slot": LocalJSX.MtConnectSlot & JSXBase.HTMLAttributes<HTMLMtConnectSlotElement>;
         }
     }
 }
